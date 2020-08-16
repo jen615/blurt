@@ -10,6 +10,20 @@
     <hr>
     <div id="timeline">
         <h3>Your Feed</h3>
+        <div class="post-area" id="all-posts-view">
+            {% for post in all-posts %}
+                <div class="post">
+                    {{ post }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="post-area" id="following-view" hidden>
+            {% for post in following-posts %}
+                <div class="post">
+                    {{ post }}
+                </div>
+            {% endfor %}
+        </div>
     </div>
 
 {% endblock %}

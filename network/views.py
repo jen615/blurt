@@ -61,3 +61,9 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+
+
+def load_posts(request):
+    if request['all']:
+        return # The 20 most recent posts
+    return # The 20 most recent posts from users that the current user follows
