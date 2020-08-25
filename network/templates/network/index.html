@@ -1,29 +1,15 @@
 {% extends "network/layout.html" %}
+{% load static %}
 
 {% block body %}
-    <form>
-        <h3>New Post</h3>
-            <textarea rows="15" cols="55"> </textarea>
-        <br>
-        <button type="submit"> Submit Post </button>
+    {% if user.is_authenticated %}
+    <form id="post-area" method="post">
+    {% csrf_token %}
+        <textarea id="post-box" placeholder="What's on your mind?" cols="77" rows="10"></textarea>
+        <input style="display: block" type="submit" id="submit-post">
     </form>
-    <hr>
-    <div id="timeline">
-        <h3>Your Feed</h3>
-        <div class="post-area" id="all-posts-view">
-            {% for post in all-posts %}
-                <div class="post">
-                    {{ post }}
-                </div>
-            {% endfor %}
-        </div>
-        <div class="post-area" id="following-view" hidden>
-            {% for post in following-posts %}
-                <div class="post">
-                    {{ post }}
-                </div>
-            {% endfor %}
-        </div>
-    </div>
+    {% endif %}
+    TODO
 
+    <script src="{% static 'network/index.js' %}"></script>
 {% endblock %}
