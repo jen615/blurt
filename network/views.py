@@ -88,8 +88,6 @@ def make_post(request):
     if not user:
         return JsonResponse({'error': 'user must be logged in'})
     data = json.loads(request.body)
-    print(f'{request.META}')
-    print(f'{request.headers}')
     print(request.user)
     print(data)
     content = data['content']
@@ -104,6 +102,7 @@ def make_post(request):
     return JsonResponse({'message': 'Post successful'}, status=201)
 
 
+@login_required
 def edit_post(request, post_id):
     try:
         post = Post.objects.get(id=post_id)
@@ -126,6 +125,7 @@ def edit_post(request, post_id):
         }, status=400)
 
 
+@login_required
 def load_posts(request, feed):
     user = request.user
     if feed == 'all':
@@ -142,5 +142,5 @@ def load_posts(request, feed):
         return JsonResponse({'error': 'she succ me'}, status=400)
 
     # Return posts in reverse order
-    posts = posts.order_by('-timestamp').all()
-    return JsonResponse([posts.serialize() for post in posts], safe=False)
+    posts = posts.order_by('-time').all()
+    return JsonResponse([post.serialize() for post in posts], safe=False)

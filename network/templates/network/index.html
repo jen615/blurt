@@ -2,9 +2,12 @@
 {% load static %}
 
 {% block body %}
+    {% csrf_token %}
+    <script>
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    </script>
     {% if user.is_authenticated %}
     <form id="post-area" method="post">
-    {% csrf_token %}
         <textarea id="post-box" placeholder="What's on your mind?" cols="77" rows="10"></textarea>
         <input style="display: block" type="submit" id="submit-post">
     </form>

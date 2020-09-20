@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-
+    // Load all posts
+    allPosts();
     // Make a post
     document.querySelector('#submit-post').addEventListener('click', (response) => {
         response.preventDefault();
@@ -17,7 +18,14 @@ function followingPosts() {
 }
 
 function allPosts() {
-    //TODO
+    fetch('/feed/all')
+        .then(response => response.json())
+        .then(posts => {
+            console.log(posts)
+            for (const post in posts) {
+                console.log(post.author)
+            }
+        })
 }
 
 function userPosts(user) {
@@ -31,6 +39,7 @@ function morePosts(group) {
 function makePost() {
     const content = document.querySelector('#post-box').value;
     fetch('/post/', {
+        headers: {'X-CSRFToken': csrftoken},
         method: 'POST',
         body: JSON.stringify({
             content: content
