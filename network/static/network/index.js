@@ -21,9 +21,11 @@ function allPosts() {
     fetch('/feed/all')
         .then(response => response.json())
         .then(posts => {
-            console.log(posts)
-            for (const post in posts) {
-                console.log(post.author)
+            console.log(posts);
+            console.log(posts.length);
+            console.log(posts[5].author);
+            for (const postsKey in posts) {
+                console.log(posts[postsKey].content)
             }
         })
 }
