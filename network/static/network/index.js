@@ -25,7 +25,7 @@ function allPosts() {
             console.log(posts.length);
             console.log(posts[5].author);
             for (const postsKey in posts) {
-                console.log(posts[postsKey].content)
+                renderPost(posts[postsKey])
             }
         })
 }
@@ -50,6 +50,26 @@ function makePost() {
         .then(() => {
             console.log('post submitted')
         })
+}
+
+function renderPost(post) {
+    const postArea = document.createElement("div");
+    postArea.className = 'post'
+
+    const author = document.createElement("p")
+    author.innerHTML = post.author;
+    const time = document.createElement("p");
+    time.innerHTML = post.time;
+    const content = document.createElement("p");
+    content.innerHTML = post.content;
+    const likes = document.createElement("p");
+    likes.innerHTML =`Likes: ${post.likes}`;
+    const rule = document.createElement("hr")
+
+    postArea.append(author, time, content, likes);
+    document.querySelector('.post-zone').append(postArea)
+    document.querySelector('.post-zone').append(rule);
+
 }
 
 function editPost(post) {
