@@ -7,13 +7,24 @@
         const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     </script>
     {% if user.is_authenticated %}
-    <form id="post-area" method="post">
-        <textarea id="post-box" placeholder="What's on your mind?" cols="77" rows="10"></textarea>
-        <input style="display: block" type="submit" id="submit-post">
-    </form>
+        <form id="post-area" method="post">
+            <textarea id="post-box" placeholder="What's on your mind?" cols="77" rows="5" required></textarea>
+            <input style="display: block" type="submit" id="submit-post">
+        </form>
     {% endif %}
-    <div class="post-zone">
-    <hr>
+    <div class="profile-view">
+        <h2 id="profile-username"></h2>
+        <div class="follower-section">
+            <h4> Followers</h4>
+            <p id="follower-count"></p>
+        </div>
+        <div class="following-section">
+            <h4> Following</h4>
+            <p id="following-count"></p>
+        </div>
+    </div>
+    <div class="post-view">
+        <hr>
     </div>
 
     <script src="{% static 'network/index.js' %}"></script>
