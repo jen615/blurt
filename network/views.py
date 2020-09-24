@@ -66,6 +66,12 @@ def register(request):
         return render(request, "network/register.html")
 
 
+def get_followers(user):
+    user = User.objects.get(username=user)
+    followers = User.objects.filter(following=user.id)
+    return {'followers': f'{len(followers)}'}
+
+
 def profile(request, username):
     try:
         user = User.objects.get(username=username)
@@ -75,7 +81,10 @@ def profile(request, username):
     if request.method != "GET":
         return JsonResponse({"error": "must be a GET request"}, status=400)
 
-    return JsonResponse(user.serialize(), safe=False)
+    response = user.serialize()
+    response.update(get_followers(username))
+
+    return JsonResponse(response, safe=False)
 
 
 @login_required

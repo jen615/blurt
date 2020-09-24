@@ -40,13 +40,12 @@ function loadPosts(feed) {
         .then(response => response.json())
         .then(posts => {
             console.log(posts);
-            console.log(posts.length);
+            console.log(posts.length); //TODO add if logic later to truncate to 20 posts
             for (const postsKey in posts) {
                 renderPost(posts[postsKey])
             }
         })
 }
-
 
 function morePosts(group) {
 }
@@ -101,13 +100,9 @@ function renderPost(post) {
 
 }
 
-function editPost(post) {
+function editPost(post) {}
 
-}
-
-function likePost(post) {
-
-}
+function likePost(post) {}
 
 // Profiling
 function loadProfile(user) {
@@ -119,6 +114,7 @@ function loadProfile(user) {
         .then(response => response.json())
         .then(profile => {
             console.log(profile);
+            document.querySelector('#follower-count').innerHTML= profile.followers;
             document.querySelector('#following-count').innerHTML= profile.following;
         })
 
