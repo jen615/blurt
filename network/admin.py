@@ -6,7 +6,7 @@ from network.models import User, Post
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    fields = ['username', 'first_name', 'email', 'followers', 'following']
+    fields = ['username', 'first_name', 'email', 'following']
 
 
 @admin.register(Post)

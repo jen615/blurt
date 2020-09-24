@@ -6,7 +6,6 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.decorators.csrf import csrf_exempt
 
 from .models import User, Post
 
@@ -67,9 +66,9 @@ def register(request):
         return render(request, "network/register.html")
 
 
-def profile(request, user_id):
+def profile(request, username):
     try:
-        user = User.objects.get(pk=user_id)
+        user = User.objects.get(username=username)
     except User.DoesNotExist:
         return JsonResponse({"error": "User not found"}, status=404)
 
@@ -96,6 +95,11 @@ def make_post(request):
         author=user,
         content=content
     )
+
+    try:
+        post.full_clean()
+    except ValueError as e:
+        return JsonResponse({'message': 'invalid post'}, status=418)
 
     post.save()
 
@@ -127,19 +131,17 @@ def edit_post(request, post_id):
 
 @login_required
 def load_posts(request, feed):
-    user = request.user
+    user = User.objects.get(username=request.user)
     if feed == 'all':
         posts = Post.objects.all()
     elif feed == 'following':
         posts = Post.objects.filter(
-            author=(user and User.objects.filter(pk=user))
-        )
-    elif feed == 'user':
-        posts = Post.objects.filter(
-            author=user
+            author__in=user.following.all()
         )
     else:
-        return JsonResponse({'error': 'she succ me'}, status=400)
+        posts = Post.objects.filter(
+            author=User.objects.get(username=feed)
+        )
 
     # Return posts in reverse order
     posts = posts.order_by('-time').all()
