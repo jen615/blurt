@@ -122,15 +122,16 @@ def edit_post(request, post_id):
     except Post.DoesNotExist:
         return JsonResponse({"error": "Post not found."}, status=404)
 
-    # Serve individual post
-    if request.method == "GET":
-        return JsonResponse(post.serialize(), safe=False)
+    if post.author != request.user:
+        return JsonResponse({'error': 'you are not authorized to edit this post'})
 
-    # Edit post
-    elif request.method == "PUT":
+    if request.method == "PUT":
         data = json.loads(request.body)
+        print(data)
         if data.get("content") != post.content:
             post.content = data["content"]
+            post.save()
+            return JsonResponse({'message': 'Edit successful'}, status=201)
 
     else:
         return JsonResponse({
@@ -155,3 +156,21 @@ def load_posts(request, feed):
     # Return posts in reverse order
     posts = posts.order_by('-time').all()
     return JsonResponse([post.serialize() for post in posts], safe=False)
+
+
+@login_required
+def like_post(request, post_id):
+    user = User.objects.get(username=request.user)
+    try:
+        post = Post.objects.get(id=post_id)
+    except Post.DoesNotExist:
+        return JsonResponse({"error": "Post not found."}, status=404)
+
+    if request.method == "PUT":
+        if user not in post.likes.all():
+            post.likes.add(user)
+        else:
+            post.likes.remove(user)
+
+    post.save()
+    return JsonResponse({'message': 'like successful'}, status=200)

@@ -1,24 +1,25 @@
-document.addEventListener('DOMContentLoaded', function() {
+// Declare the working feed as a global variable
+let feed = 'all';
 
-    let feed = 'all';
+document.addEventListener('DOMContentLoaded', function() {
 
     // Load all posts
     postView();
     loadPosts(feed);
 
+    // Feed listeners
     document.querySelector('#following-feed').addEventListener('click', () => {
         feed = 'following';
         postView();
         loadPosts(feed)
     })
-
     document.querySelector('#all-feed').addEventListener('click', () => {
         feed = 'all';
         postView();
         loadPosts(feed)
     })
 
-    // Make a post
+    // Post listener
     document.querySelector('#submit-post').addEventListener('click', (response) => {
         response.preventDefault();
         makePost(feed)
@@ -126,11 +127,52 @@ function renderPost(post) {
 
 // PUT requests
 function editPost(id) {
+    if (document.querySelector('#edit-box')) {
+        alert('only one post is editable at a time')
+        return;
+    }
+    console.log(id)
+    const post = document.getElementById(`${id}`)
+    const content = post.children[2].innerHTML;
+    console.log(content)
 
+    const editField = document.createElement("textarea")
+    editField.id = 'edit-box';
+    editField.innerHTML = content;
+    editField.addEventListener('keydown', event => {
+        if (event.keyCode === 13) {
+            fetch(`/post/edit/${id}`, {
+                headers: {'X-CSRFToken': csrftoken},
+                method: 'PUT',
+                body: JSON.stringify({
+                    content: editField.value
+                })
+            })
+                .then(res => {
+                    if (!res.ok) {
+                        alert('invalid message');
+                        return;
+                    }
+                    loadPosts(feed);
+                })
+        }
+    })
+
+    post.replaceChild(editField, post.children[2])
 }
 
 function likePost(id) {
-
+    fetch(`/post/like/${id}`, {
+        headers: {'X-CSRFToken': csrftoken},
+        method: 'PUT',
+    })
+        .then(res => {
+            if (!res.ok) {
+                alert('invalid message');
+                return;
+            }
+            loadPosts(feed);
+        })
 }
 
 // Profiling
