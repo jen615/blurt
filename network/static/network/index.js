@@ -1,7 +1,7 @@
 // Declare the working feed as a global variable
 let feed = 'all';
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
     // Load all posts
     postView();
@@ -26,11 +26,10 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
 
-
 })
 
 // Feed loading
-function postView(){
+function postView() {
     document.querySelector('.profile-view').hidden = true;
     document.querySelector('.post-view').style.display = 'block';
 }
@@ -49,6 +48,7 @@ function loadPosts(feed) {
 }
 
 function morePosts(group) {
+
 }
 
 // Posting
@@ -75,10 +75,12 @@ function renderPost(post) {
 
     const id = post.id;
 
+    // Post div
     const postArea = document.createElement("div");
     postArea.className = 'post'
     postArea.id = id;
 
+    // Post components
     const author = document.createElement("a")
     author.innerHTML = post.author;
     author.className = 'username'
@@ -91,15 +93,14 @@ function renderPost(post) {
     const content = document.createElement("p");
     content.innerHTML = post.content;
     const likes = document.createElement("p");
-    likes.innerHTML =`Likes: ${post.likes}`;
-
+    likes.innerHTML = `Likes: ${post.likes}`;
 
     // Like button
     const likeButton = document.createElement("button");
     likeButton.value = id;
     likeButton.className = 'like-button';
     likeButton.innerHTML = ' ❣ like'
-    likeButton.addEventListener("click", () =>{
+    likeButton.addEventListener("click", () => {
         likePost(id);
     })
 
@@ -107,12 +108,12 @@ function renderPost(post) {
     const editButton = document.createElement("button");
     editButton.value = id;
     editButton.className = 'edit-button';
-    editButton.innerHTML= 'edit';
+    editButton.innerHTML = 'edit';
     editButton.addEventListener("click", () => {
         editPost(id);
     })
 
-    //Separate with a hr
+    //Separate posts with a hr
     const rule = document.createElement("hr")
 
     // Render post to dom, adding edit button only to the current user's posts
@@ -127,18 +128,22 @@ function renderPost(post) {
 
 // PUT requests
 function editPost(id) {
+    // Check to see if other edit-boxes are open
     if (document.querySelector('#edit-box')) {
         alert('only one post is editable at a time')
         return;
     }
-    console.log(id)
+
+    // Get original post contents
     const post = document.getElementById(`${id}`)
     const content = post.children[2].innerHTML;
-    console.log(content)
 
+    // Create editable textarea
     const editField = document.createElement("textarea")
     editField.id = 'edit-box';
     editField.innerHTML = content;
+
+    // Edit request
     editField.addEventListener('keydown', event => {
         if (event.keyCode === 13) {
             fetch(`/post/edit/${id}`, {
@@ -158,6 +163,7 @@ function editPost(id) {
         }
     })
 
+    // Convert post to textarea
     post.replaceChild(editField, post.children[2])
 }
 
@@ -168,25 +174,56 @@ function likePost(id) {
     })
         .then(res => {
             if (!res.ok) {
-                alert('invalid message');
+                alert('cannot like this post');
                 return;
             }
             loadPosts(feed);
         })
 }
 
+function followProfile(user) {
+    fetch(`/profile/follow/${user}`, {
+        headers: {'X-CSRFToken': csrftoken},
+        method: 'PUT',
+    })
+        .then(res => {
+            if (!res.ok) {
+                alert('cannot follow user');
+                return;
+            }
+            loadProfile(user);
+        })
+}
+
 // Profiling
 function loadProfile(user) {
-    document.querySelector('.post-view').innerHTML= '';
+    document.querySelector('.post-view').innerHTML = '';
     document.querySelector('.profile-view').hidden = false;
-    document.querySelector('#profile-username').innerHTML = user;
+    let profileName = document.querySelector('#profile-username').innerHTML = user;
+
+    // Create follow button
+    const fButton = document.createElement("button");
+    fButton.id = 'follow-button';
+    fButton.innerHTML = '🚶‍♀️Follow'
+    fButton.addEventListener('click', () => {
+        followProfile(user);
+    })
+
+    if (!document.getElementById('follow-button')) {
+        document.querySelector('.profile-view').append(fButton);
+    }
+
+    //ensure the user cant follow themself
+    if (profileName === username) {
+        document.querySelector('#follow-button').disabled = true;
+    }
 
     fetch(`/profile/${user}`)
         .then(response => response.json())
         .then(profile => {
             console.log(profile);
-            document.querySelector('#follower-count').innerHTML= profile.followers;
-            document.querySelector('#following-count').innerHTML= profile.following;
+            document.querySelector('#follower-count').innerHTML = profile.followers;
+            document.querySelector('#following-count').innerHTML = profile.following;
         })
 
     loadPosts(user)
@@ -196,6 +233,3 @@ function loadProfile(user) {
 
 }
 
-function followProfile(user) {
-
-}

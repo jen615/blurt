@@ -88,6 +88,25 @@ def profile(request, username):
 
 
 @login_required
+def load_posts(request, feed):
+    user = User.objects.get(username=request.user)
+    if feed == 'all':
+        posts = Post.objects.all()
+    elif feed == 'following':
+        posts = Post.objects.filter(
+            author__in=user.following.all()
+        )
+    else:
+        posts = Post.objects.filter(
+            author=User.objects.get(username=feed)
+        )
+
+    # Return posts in reverse order
+    posts = posts.order_by('-time').all()
+    return JsonResponse([post.serialize() for post in posts], safe=False)
+
+
+@login_required
 def make_post(request):
     if request.method != "POST":
         return JsonResponse({"error": "POST request required"}, status=400)
@@ -140,25 +159,6 @@ def edit_post(request, post_id):
 
 
 @login_required
-def load_posts(request, feed):
-    user = User.objects.get(username=request.user)
-    if feed == 'all':
-        posts = Post.objects.all()
-    elif feed == 'following':
-        posts = Post.objects.filter(
-            author__in=user.following.all()
-        )
-    else:
-        posts = Post.objects.filter(
-            author=User.objects.get(username=feed)
-        )
-
-    # Return posts in reverse order
-    posts = posts.order_by('-time').all()
-    return JsonResponse([post.serialize() for post in posts], safe=False)
-
-
-@login_required
 def like_post(request, post_id):
     user = User.objects.get(username=request.user)
     try:
@@ -174,3 +174,22 @@ def like_post(request, post_id):
 
     post.save()
     return JsonResponse({'message': 'like successful'}, status=200)
+
+
+@login_required
+def follow(request, user):
+    follower = User.objects.get(username=request.user)
+
+    try:
+        leader = User.objects.get(username=user)
+    except User.DoesNotExist:
+        return JsonResponse({'error': 'user not found'})
+
+    if request.method == 'PUT':
+        if leader not in follower.following.all():
+            follower.following.add(leader)
+        else:
+            follower.following.remove(leader)
+
+    follower.save()
+    return JsonResponse({'message': 'follow successful'}, status=201)
