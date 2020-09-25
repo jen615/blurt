@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
         makePost(feed)
     })
 
-
 })
 
 // Feed loading
@@ -197,6 +196,7 @@ function followProfile(user) {
 
 // Profiling
 function loadProfile(user) {
+    feed = user;
     document.querySelector('.post-view').innerHTML = '';
     document.querySelector('.profile-view').hidden = false;
     let profileName = document.querySelector('#profile-username').innerHTML = user;
@@ -226,10 +226,7 @@ function loadProfile(user) {
             document.querySelector('#following-count').innerHTML = profile.following;
         })
 
-    loadPosts(user)
-
-
-    console.log(`profile for ${user}`)
+    loadPosts(feed)
 
 }
 
