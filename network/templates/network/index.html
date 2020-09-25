@@ -5,6 +5,7 @@
     {% csrf_token %}
     <script>
         const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const username = '{{ user.username }}';
     </script>
     {% if user.is_authenticated %}
         <form id="post-area" method="post">

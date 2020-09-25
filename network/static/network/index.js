@@ -65,19 +65,18 @@ function makePost(feed) {
                 alert('invalid message');
                 return;
             }
-            console.log('post submitted');
             loadPosts(feed);
         })
-        .catch(error => {
-            console.error('stop trying to make fetch happen', error);
-        })
-    ;
     document.querySelector('#post-box').value = '';
 }
 
 function renderPost(post) {
+
+    const id = post.id;
+
     const postArea = document.createElement("div");
     postArea.className = 'post'
+    postArea.id = id;
 
     const author = document.createElement("a")
     author.innerHTML = post.author;
@@ -92,17 +91,47 @@ function renderPost(post) {
     content.innerHTML = post.content;
     const likes = document.createElement("p");
     likes.innerHTML =`Likes: ${post.likes}`;
+
+
+    // Like button
+    const likeButton = document.createElement("button");
+    likeButton.value = id;
+    likeButton.className = 'like-button';
+    likeButton.innerHTML = ' ❣ like'
+    likeButton.addEventListener("click", () =>{
+        likePost(id);
+    })
+
+    // Edit button
+    const editButton = document.createElement("button");
+    editButton.value = id;
+    editButton.className = 'edit-button';
+    editButton.innerHTML= 'edit';
+    editButton.addEventListener("click", () => {
+        editPost(id);
+    })
+
+    //Separate with a hr
     const rule = document.createElement("hr")
 
-    postArea.append(author, time, content, likes);
+    // Render post to dom, adding edit button only to the current user's posts
+    postArea.append(author, time, content, likes, likeButton);
+    if (post.author === username) {
+        postArea.append(editButton);
+    }
     document.querySelector('.post-view').append(postArea);
     document.querySelector('.post-view').append(rule);
 
 }
 
-function editPost(post) {}
+// PUT requests
+function editPost(id) {
 
-function likePost(post) {}
+}
+
+function likePost(id) {
+
+}
 
 // Profiling
 function loadProfile(user) {
