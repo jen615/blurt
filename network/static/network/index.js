@@ -33,15 +33,38 @@ function postView() {
     document.querySelector('.post-view').style.display = 'block';
 }
 
-function loadPosts(feed) {
+function loadPosts(feed, page = 1) {
     document.querySelector(".post-view").innerHTML = '<hr>';
-    fetch(`/feed/${feed}`)
+    fetch(`/feed/${feed}/${page}`)
         .then(response => response.json())
-        .then(posts => {
-            console.log(posts);
-            console.log(posts.length); //TODO add if logic later to truncate to 20 posts
-            for (const postsKey in posts) {
-                renderPost(posts[postsKey])
+        .then(response => {
+            const postPack = response['posts'];
+            console.log(response['next']);
+            console.log(postPack.length);
+            for (const i in postPack) {
+                renderPost(postPack[i])
+            }
+
+            //Previous page button
+            if (page > 1) {
+                const prevButton = document.createElement("button");
+                prevButton.className = 'page-button';
+                prevButton.innerHTML = 'Previous';
+                prevButton.addEventListener("click", () => {
+                    loadPosts(feed, page - 1)
+                })
+                document.querySelector('.post-view').append(prevButton);
+            }
+
+            // Next page button
+            if (response['next']) {
+                const nextButton = document.createElement("button");
+                nextButton.className = 'page-button';
+                nextButton.innerHTML = 'Next';
+                nextButton.addEventListener("click", () => {
+                    loadPosts(feed, page + 1)
+                })
+                document.querySelector('.post-view').append(nextButton);
             }
         })
 }
@@ -120,6 +143,11 @@ function renderPost(post) {
     if (post.author === username) {
         postArea.append(editButton);
     }
+
+    //TODO: Move this to the load feed function so that new posts can be prepended
+    // to the post view w/o refreshing whole view and edited posts can be modified in place.
+    // The new return would be the postArea.
+
     document.querySelector('.post-view').append(postArea);
     document.querySelector('.post-view').append(rule);
 
@@ -128,7 +156,7 @@ function renderPost(post) {
 // PUT requests
 function editPost(id) {
     // Check to see if other edit-boxes are open
-    if (document.querySelector('#edit-box')) {
+    if (document.querySelector('.edit-box')) {
         alert('only one post is editable at a time')
         return;
     }
@@ -144,7 +172,7 @@ function editPost(id) {
 
     // Edit request
     editField.addEventListener('keydown', event => {
-        if (event.keyCode === 13) {
+        if (event.key === 'Enter') {
             fetch(`/post/edit/${id}`, {
                 headers: {'X-CSRFToken': csrftoken},
                 method: 'PUT',

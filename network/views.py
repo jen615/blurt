@@ -2,6 +2,7 @@ import json
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
@@ -88,7 +89,7 @@ def profile(request, username):
 
 
 @login_required
-def load_posts(request, feed):
+def load_posts(request, feed, page):
     user = User.objects.get(username=request.user)
     if feed == 'all':
         posts = Post.objects.all()
@@ -103,7 +104,15 @@ def load_posts(request, feed):
 
     # Return posts in reverse order
     posts = posts.order_by('-time').all()
-    return JsonResponse([post.serialize() for post in posts], safe=False)
+    serialization = [post.serialize() for post in posts]
+
+    # Paginate results
+    pagi = Paginator(serialization, 5)
+    current_page = pagi.page(page).object_list
+    print(current_page)
+    has_next = pagi.page(page).has_next()
+
+    return JsonResponse({"next": has_next, "posts": current_page}, safe=False)
 
 
 @login_required
@@ -169,11 +178,12 @@ def like_post(request, post_id):
     if request.method == "PUT":
         if user not in post.likes.all():
             post.likes.add(user)
+            post.save()
+            return JsonResponse({'message': 'liked'}, status=200)
         else:
             post.likes.remove(user)
-
-    post.save()
-    return JsonResponse({'message': 'like successful'}, status=200)
+            post.save()
+            return JsonResponse({'message': 'unliked'}, status=200)
 
 
 @login_required
