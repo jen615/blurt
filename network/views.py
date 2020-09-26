@@ -109,7 +109,6 @@ def load_posts(request, feed, page):
     # Paginate results
     pagi = Paginator(serialization, 5)
     current_page = pagi.page(page).object_list
-    print(current_page)
     has_next = pagi.page(page).has_next()
 
     return JsonResponse({"next": has_next, "posts": current_page}, safe=False)
@@ -121,11 +120,7 @@ def make_post(request):
         return JsonResponse({"error": "POST request required"}, status=400)
 
     user = request.user
-    if not user:
-        return JsonResponse({'error': 'user must be logged in'})
     data = json.loads(request.body)
-    print(request.user)
-    print(data)
     content = data['content']
 
     post = Post(
@@ -155,16 +150,14 @@ def edit_post(request, post_id):
 
     if request.method == "PUT":
         data = json.loads(request.body)
-        print(data)
         if data.get("content") != post.content:
             post.content = data["content"]
             post.save()
             return JsonResponse({'message': 'Edit successful'}, status=201)
-
+        else:
+            return JsonResponse({'message': 'Unedited'}, status=201)
     else:
-        return JsonResponse({
-            "error": "GET or PUT request required."
-        }, status=400)
+        return JsonResponse({"error": "GET or PUT request required."}, status=400)
 
 
 @login_required

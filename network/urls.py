@@ -1,4 +1,3 @@
-
 from django.urls import path
 
 from . import views
@@ -17,4 +16,3 @@ urlpatterns = [
     path("profile/follow/<str:user>", views.follow, name='follow'),
     path("feed/<str:feed>/<int:page>", views.load_posts, name='feed'),
 ]
-
