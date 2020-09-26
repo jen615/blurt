@@ -39,8 +39,6 @@ function loadPosts(feed, page = 1) {
         .then(response => response.json())
         .then(response => {
             const postPack = response['posts'];
-            console.log(response['next']);
-            console.log(postPack.length);
             for (const i in postPack) {
                 renderPost(postPack[i])
             }
@@ -249,7 +247,6 @@ function loadProfile(user) {
     fetch(`/profile/${user}`)
         .then(response => response.json())
         .then(profile => {
-            console.log(profile);
             document.querySelector('#follower-count').innerHTML = profile.followers;
             document.querySelector('#following-count').innerHTML = profile.following;
         })
