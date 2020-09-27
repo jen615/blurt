@@ -2,12 +2,21 @@ html {
   background-color: teal;
 }
 
-.navbar{
+.navbar {
   background-color: #7abfbf;
-  .navbar-brand{
+
+  .navbar-brand {
     font-style: italic;
     font-weight: bolder;
     color: #5a3615;
+  }
+}
+
+#login-message{
+  color: #5a3615;
+  a{
+    font-style: italic;
+    color: #f1bd7f;
   }
 }
 
@@ -21,20 +30,31 @@ html {
     margin-top: 3vh;
     margin-bottom: .5vh;
     border-radius: 5px;
-    border-color: #64acac;
+    border-color: #dbc2a8;
     background-color: antiquewhite;
+  }
+
+  textarea:focus{
+    outline: none;
+    border: 1px solid #dbc2a8;
+    box-shadow: 0 0 10px #baa588;
   }
 
   input {
     display: block;
     border-color: #baa588;
+    border-right-color: #f1bd7f;
+    border-bottom-color: #f1bd7f;
     background-color: antiquewhite;
     border-radius: 12px;
     justify-self: right;
   }
 }
+.post-view{
+  min-width: 50%;
+}
 
-hr{
+hr {
   border-color: #64acac;
 }
 
@@ -58,27 +78,32 @@ hr{
     border-radius: 8px;
     padding: .5vh .5vw;
   }
-  .timestamp{
+  .username:hover{
+    font-weight: bolder;
+    text-decoration: none;
+  }
+
+  .timestamp {
     margin-left: 1vw;
     display: inline;
     font-size: smaller;
     color: #dbc2a8;
   }
 
-  .content{
+  .content {
     padding-left: 1vw;
     padding-top: 3vh;
     color: #5a3615;
   }
 
-  .likes{
+  .likes {
     padding-left: 1vw;
     font-size: 0.9em;
     font-style: italic;
     color: #dbc2a8;
   }
 
-  .like-button{
+  .like-button {
     background-color: #dbc2a8;
     border-color: #baa588;
     border-radius: 12px;
@@ -93,6 +118,11 @@ hr{
   }
 }
 
-.page-button{
-  justify-self: right;
+.page-button {
+  display: inline;
+  justify-self: center;
+}
+
+label {
+  display: none;
 }

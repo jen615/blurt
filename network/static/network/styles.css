@@ -11,6 +11,14 @@ html {
   color: #5a3615;
 }
 
+#login-message {
+  color: #5a3615;
+}
+#login-message a {
+  font-style: italic;
+  color: #f1bd7f;
+}
+
 #post-area {
   background-color: #64acac;
   display: grid;
@@ -21,15 +29,26 @@ html {
   margin-top: 3vh;
   margin-bottom: 0.5vh;
   border-radius: 5px;
-  border-color: #64acac;
+  border-color: #dbc2a8;
   background-color: antiquewhite;
+}
+#post-area textarea:focus {
+  outline: none;
+  border: 1px solid #dbc2a8;
+  box-shadow: 0 0 10px #baa588;
 }
 #post-area input {
   display: block;
   border-color: #baa588;
+  border-right-color: #f1bd7f;
+  border-bottom-color: #f1bd7f;
   background-color: antiquewhite;
   border-radius: 12px;
   justify-self: right;
+}
+
+.post-view {
+  min-width: 50%;
 }
 
 hr {
@@ -55,6 +74,10 @@ hr {
   background-color: #dbc2a8;
   border-radius: 8px;
   padding: 0.5vh 0.5vw;
+}
+.post .username:hover {
+  font-weight: bolder;
+  text-decoration: none;
 }
 .post .timestamp {
   margin-left: 1vw;
@@ -87,7 +110,12 @@ hr {
 }
 
 .page-button {
-  justify-self: right;
+  display: inline;
+  justify-self: center;
+}
+
+label {
+  display: none;
 }
 
 /*# sourceMappingURL=styles.css.map */
