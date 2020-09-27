@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function postView() {
     document.querySelector('.profile-view').hidden = true;
     document.querySelector('#post-area').hidden = false;
-    document.querySelector('.post-view').style.display = 'block';
+    document.querySelector('.post-view').style.display = 'grid';
 }
 
 function loadPosts(feed, page = 1) {
