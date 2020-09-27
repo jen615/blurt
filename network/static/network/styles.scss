@@ -1,0 +1,98 @@
+html {
+  background-color: teal;
+}
+
+.navbar{
+  background-color: #7abfbf;
+  .navbar-brand{
+    font-style: italic;
+    font-weight: bolder;
+    color: #5a3615;
+  }
+}
+
+#post-area {
+  background-color: #64acac;
+  display: grid;
+  place-items: center;
+
+  textarea {
+    align-self: center;
+    margin-top: 3vh;
+    margin-bottom: .5vh;
+    border-radius: 5px;
+    border-color: #64acac;
+    background-color: antiquewhite;
+  }
+
+  input {
+    display: block;
+    border-color: #baa588;
+    background-color: antiquewhite;
+    border-radius: 12px;
+    justify-self: right;
+  }
+}
+
+hr{
+  border-color: #64acac;
+}
+
+.body {
+  background-color: #64acac;
+  display: grid;
+  place-items: center;
+}
+
+.post {
+  margin-left: 5vw;
+  margin-right: 5vw;
+  padding: 1vw;
+  border: 2px solid #dbc2a8;
+  border-radius: 5px;
+
+  .username {
+    color: black;
+    font-size: larger;
+    background-color: #dbc2a8;
+    border-radius: 8px;
+    padding: .5vh .5vw;
+  }
+  .timestamp{
+    margin-left: 1vw;
+    display: inline;
+    font-size: smaller;
+    color: #dbc2a8;
+  }
+
+  .content{
+    padding-left: 1vw;
+    padding-top: 3vh;
+    color: #5a3615;
+  }
+
+  .likes{
+    padding-left: 1vw;
+    font-size: 0.9em;
+    font-style: italic;
+    color: #dbc2a8;
+  }
+
+  .like-button{
+    background-color: #dbc2a8;
+    border-color: #baa588;
+    border-radius: 12px;
+  }
+
+  .edit-button {
+    background-color: #dbc2a8;
+    border-color: #baa588;
+    border-radius: 12px;
+    margin-left: 1vw;
+    font-size: smaller;
+  }
+}
+
+.page-button{
+  justify-self: right;
+}
