@@ -9,24 +9,31 @@
     </script>
     {% if user.is_authenticated %}
         <form id="post-area" method="post">
-            <textarea id="post-box" placeholder="What's on your mind?" cols="77" rows="5" required></textarea>
+            <label for="post-box">Text input section</label><textarea id="post-box" placeholder="What's on your mind?"
+                                                                      cols="77" rows="5" required></textarea>
             <input style="display: block" type="submit" id="submit-post">
         </form>
+        <div class="profile-view">
+            <h2 id="profile-username"></h2>
+            <div class="follower-section">
+                <h4> Followers</h4>
+                <p id="follower-count"></p>
+            </div>
+            <div class="following-section">
+                <h4> Following</h4>
+                <p id="following-count"></p>
+            </div>
+        </div>
+        <div class="post-view">
+            <hr>
+        </div>
+    {% else %}
+        <div class="post-view">
+            <hr>
+            <h5 id="login-message"><a href="{% url 'login' %} }">Login</a> to see burts from users all over the world.
+            </h5>
+        </div>
     {% endif %}
-    <div class="profile-view">
-        <h2 id="profile-username"></h2>
-        <div class="follower-section">
-            <h4> Followers</h4>
-            <p id="follower-count"></p>
-        </div>
-        <div class="following-section">
-            <h4> Following</h4>
-            <p id="following-count"></p>
-        </div>
-    </div>
-    <div class="post-view">
-        <hr>
-    </div>
 
     <script src="{% static 'network/index.js' %}"></script>
 {% endblock %}
