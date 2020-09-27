@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // Feed loading
 function postView() {
     document.querySelector('.profile-view').hidden = true;
+    document.querySelector('#post-area').hidden = false;
     document.querySelector('.post-view').style.display = 'block';
 }
 
@@ -104,16 +105,19 @@ function renderPost(post) {
     const author = document.createElement("a")
     author.innerHTML = post.author;
     author.className = 'username'
-    author.href = '#';
+    author.href = '#id';
     author.addEventListener('click', () => {
         loadProfile(post.author);
     })
     const time = document.createElement("p");
+    time.className = 'timestamp';
     time.innerHTML = post.time;
     const content = document.createElement("p");
+    content.className = 'content';
     content.innerHTML = post.content;
     const likes = document.createElement("p");
-    likes.innerHTML = `Likes: ${post.likes}`;
+    likes.className = 'likes';
+    likes.innerHTML = `${post.likes} ${post.likes === 1 ? 'like' : 'likes'}`;
 
     // Like button
     const likeButton = document.createElement("button");
@@ -154,7 +158,7 @@ function renderPost(post) {
 // PUT requests
 function editPost(id) {
     // Check to see if other edit-boxes are open
-    if (document.querySelector('.edit-box')) {
+    if (document.querySelector('#edit-box')) {
         alert('only one post is editable at a time')
         return;
     }
@@ -225,6 +229,8 @@ function loadProfile(user) {
     feed = user;
     document.querySelector('.post-view').innerHTML = '';
     document.querySelector('.profile-view').hidden = false;
+    document.querySelector('#post-area').hidden = true;
+
     let profileName = document.querySelector('#profile-username').innerHTML = user;
 
     // Create follow button
@@ -240,9 +246,7 @@ function loadProfile(user) {
     }
 
     //ensure the user cant follow themself
-    if (profileName === username) {
-        document.querySelector('#follow-button').disabled = true;
-    }
+    document.querySelector('#follow-button').disabled = profileName === username;
 
     fetch(`/profile/${user}`)
         .then(response => response.json())

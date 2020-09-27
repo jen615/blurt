@@ -2,3 +2,4 @@
 .idea
 venv
 network/migrations
+/network/static/network/styles.css.map
