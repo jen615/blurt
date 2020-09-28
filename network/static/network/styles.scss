@@ -12,9 +12,10 @@ html {
   }
 }
 
-#login-message{
+#login-message {
   color: #5a3615;
-  a{
+
+  a {
     font-style: italic;
     color: #f1bd7f;
   }
@@ -34,7 +35,7 @@ html {
     background-color: antiquewhite;
   }
 
-  textarea:focus{
+  textarea:focus {
     outline: none;
     border: 1px solid #dbc2a8;
     box-shadow: 0 0 10px #baa588;
@@ -42,16 +43,23 @@ html {
 
   input {
     display: block;
+    color: #5a3615;
     border-color: #baa588;
     border-right-color: #f1bd7f;
     border-bottom-color: #f1bd7f;
     background-color: antiquewhite;
     border-radius: 12px;
     justify-self: right;
+    font-weight: bolder;
+  }
+
+  input:hover {
+    font-style: italic;
   }
 }
-.post-view{
-  min-width: 50%;
+
+.post-view {
+  min-width: 60%;
 }
 
 hr {
@@ -78,7 +86,8 @@ hr {
     border-radius: 8px;
     padding: .5vh .5vw;
   }
-  .username:hover{
+
+  .username:hover {
     font-weight: bolder;
     text-decoration: none;
   }
@@ -118,11 +127,39 @@ hr {
   }
 }
 
+.page-area {
+  display: flex;
+  justify-content: center;
+  align-content: space-between;
+}
+
 .page-button {
   display: inline;
-  justify-self: center;
+  color: #5a3615;
+  border-color: #baa588;
+  border-right-color: #f1bd7f;
+  border-bottom-color: #f1bd7f;
+  background-color: antiquewhite;
+  font-weight: 550;
+  border-radius: 8px;
+  margin-right: .5vw;
+  margin-bottom: 1vh;
 }
 
 label {
   display: none;
+}
+
+// Profile
+.profile-view{
+  display: flex;
+}
+#profile-username{
+  display: inline;
+}
+
+.ff-zone{
+  display: flex;
+  align-content: space-evenly;
+  justify-self: right;
 }

@@ -39,16 +39,21 @@ html {
 }
 #post-area input {
   display: block;
+  color: #5a3615;
   border-color: #baa588;
   border-right-color: #f1bd7f;
   border-bottom-color: #f1bd7f;
   background-color: antiquewhite;
   border-radius: 12px;
   justify-self: right;
+  font-weight: bolder;
+}
+#post-area input:hover {
+  font-style: italic;
 }
 
 .post-view {
-  min-width: 50%;
+  min-width: 60%;
 }
 
 hr {
@@ -109,13 +114,41 @@ hr {
   font-size: smaller;
 }
 
+.page-area {
+  display: flex;
+  justify-content: center;
+  align-content: space-between;
+}
+
 .page-button {
   display: inline;
-  justify-self: center;
+  color: #5a3615;
+  border-color: #baa588;
+  border-right-color: #f1bd7f;
+  border-bottom-color: #f1bd7f;
+  background-color: antiquewhite;
+  font-weight: 550;
+  border-radius: 8px;
+  margin-right: 0.5vw;
+  margin-bottom: 1vh;
 }
 
 label {
   display: none;
+}
+
+.profile-view {
+  display: flex;
+}
+
+#profile-username {
+  display: inline;
+}
+
+.ff-zone {
+  display: flex;
+  align-content: space-evenly;
+  justify-self: right;
 }
 
 /*# sourceMappingURL=styles.css.map */
