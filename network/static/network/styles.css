@@ -151,4 +151,12 @@ label {
   justify-self: right;
 }
 
+.profile-pic {
+  display: inline-grid;
+  width: 50%;
+}
+.profile-pic img {
+  border-radius: 50%;
+}
+
 /*# sourceMappingURL=styles.css.map */

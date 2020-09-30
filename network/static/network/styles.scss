@@ -163,3 +163,11 @@ label {
   align-content: space-evenly;
   justify-self: right;
 }
+
+.profile-pic{
+  display: inline-grid;
+  width: 50%;
+  img{
+    border-radius: 50%;
+  }
+}
