@@ -70,7 +70,7 @@ def register(request):
 def get_followers(user):
     user = User.objects.get(username=user)
     followers = User.objects.filter(following=user.id)
-    return {'followers': f'{len(followers)}'}
+    return {'followers': [i. username for i in followers]}
 
 
 def profile(request, username):

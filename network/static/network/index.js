@@ -129,7 +129,7 @@ function renderPost(post) {
     const likeButton = document.createElement("button");
     likeButton.value = id;
     likeButton.className = post['likers'].includes(username) ? 'like-button active' : 'like-button';
-    likeButton.innerHTML = post['likers'].includes(username)? ' ❣ unlike': ' ❣ like';
+    likeButton.innerHTML = post['likers'].includes(username) ? ' 💔 unlike' : ' ❣ like';
     likeButton.addEventListener("click", () => {
         likePost(id);
     })
@@ -171,12 +171,12 @@ function editPost(id) {
 
     // Get original post contents
     const post = document.getElementById(`${id}`)
-    const content = post.children[2].innerHTML;
+    let content = post.children[2];
 
     // Create editable textarea
     const editField = document.createElement("textarea")
     editField.id = 'edit-box';
-    editField.innerHTML = content;
+    editField.innerHTML = content.innerHTML;
 
     // Edit request
     editField.addEventListener('keydown', event => {
@@ -193,7 +193,9 @@ function editPost(id) {
                         alert('invalid message');
                         return;
                     }
-                    loadPosts(feed);
+                    content.innerHTML = `${editField.value}`;
+                    post.replaceChild(content, editField);
+
                 })
         }
     })
@@ -203,6 +205,8 @@ function editPost(id) {
 }
 
 function likePost(id) {
+    const post = document.getElementById(`${id}`);
+    let lButton = post.children[4];
     fetch(`/post/like/${id}`, {
         headers: {'X-CSRFToken': csrftoken},
         method: 'PUT',
@@ -212,7 +216,14 @@ function likePost(id) {
                 alert('cannot like this post');
                 return;
             }
-            loadPosts(feed);
+            if (lButton.className.includes('active')) {
+                lButton.innerHTML = '❣ like';
+                lButton.className = 'like-button'
+            } else {
+                lButton.innerHTML = '💔 unlike';
+                lButton.className = 'like-button active';
+            }
+
         })
 }
 
@@ -237,31 +248,36 @@ function loadProfile(user) {
     document.querySelector('.profile-view').hidden = false;
     document.querySelector('#post-area').hidden = true;
 
+    loadPosts(feed);
+
     let profileName = document.querySelector('#profile-username').innerHTML = user;
 
-    // Create follow button
-    const fButton = document.createElement("button");
-    fButton.id = 'follow-button';
-    fButton.innerHTML = '🚶‍♀️Follow'
-    fButton.addEventListener('click', () => {
-        followProfile(user);
-    })
-
-    if (!document.getElementById('follow-button')) {
-        document.querySelector('.profile-view').append(fButton);
-    }
-
-    //ensure the user cant follow themself
-    document.querySelector('#follow-button').disabled = profileName === username;
 
     fetch(`/profile/${user}`)
         .then(response => response.json())
         .then(profile => {
-            document.querySelector('#follower-count').innerHTML = profile.followers;
+            document.querySelector('#follower-count').innerHTML = profile.followers.length;
             document.querySelector('#following-count').innerHTML = profile.following.length;
-        })
+            // Create follow button, get rid of old one
 
-    loadPosts(feed)
+            let fButton = document.createElement("button");
+            fButton.id = 'follow-button';
+            fButton.innerHTML = profile.followers.includes(username) ? '🚶‍♀️Unfollow' : '🚶‍♀️Follow';
+            fButton.addEventListener('click', () => {
+                followProfile(user);
+            })
+
+            if (!document.getElementById('follow-button')) {
+                document.querySelector('.profile-view').append(fButton);
+            } else {
+                document.getElementById('follow-button').remove();
+                document.querySelector('.profile-view').append(fButton);
+            }
+
+            document.querySelector('#follow-button').disabled = profileName === username;
+
+
+        })
 
 }
 
