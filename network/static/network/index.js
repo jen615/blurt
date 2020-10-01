@@ -25,6 +25,11 @@ document.addEventListener('DOMContentLoaded', function () {
         makePost(feed)
     })
 
+    // Profile listener
+    document.querySelector('#username').addEventListener('click', () => {
+        loadProfile(username);
+    })
+
 })
 
 // Feed loading
