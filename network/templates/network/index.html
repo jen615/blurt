@@ -11,21 +11,25 @@
         <form id="post-area" method="post">
             <label for="post-box">Text input section</label><textarea id="post-box" placeholder="What's on your mind?"
                                                                       cols="77" rows="5" required></textarea>
-            <input style="display: block" type="submit" id="submit-post">
+            <input style="display: block" type="submit" value="blurt" id="submit-post">
         </form>
         <div class="profile-view">
-            <h2 id="profile-username"></h2>
-            <div class="follower-section">
-                <h4> Followers</h4>
-                <p id="follower-count"></p>
+            <div class="profile-pic">
+                <h2 id="profile-username"></h2>
+                <img src="{%  static 'pics/test_dog.png' %}" alt="profile picture">
             </div>
-            <div class="following-section">
-                <h4> Following</h4>
-                <p id="following-count"></p>
+            <div class="ff-zone">
+                <div class="follower-section">
+                    <h4> Followers</h4>
+                    <p id="follower-count"></p>
+                </div>
+                <div class="following-section">
+                    <h4> Following</h4>
+                    <p id="following-count"></p>
+                </div>
             </div>
         </div>
         <div class="post-view">
-            <hr>
         </div>
     {% else %}
         <div class="post-view">
