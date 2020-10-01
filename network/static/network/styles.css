@@ -67,6 +67,8 @@ hr {
 }
 
 .post {
+  min-width: 500px;
+  width: available;
   margin-left: 5vw;
   margin-right: 5vw;
   padding: 1vw;
@@ -174,7 +176,7 @@ label {
   place-self: center;
 }
 .profile-view .ff-zone p {
-  margin-left: 45%;
+  text-align: center;
 }
 .profile-view #follow-button {
   grid-column: 1/3;

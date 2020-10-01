@@ -73,6 +73,8 @@ hr {
 }
 
 .post {
+  min-width: 500px;
+  width: available;
   margin-left: 5vw;
   margin-right: 5vw;
   padding: 1vw;
@@ -191,7 +193,7 @@ label {
     grid-column: 2/3;
     place-self: center;
     p {
-      margin-left: 45%;
+      text-align: center;
     }
   }
 
