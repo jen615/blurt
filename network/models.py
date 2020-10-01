@@ -10,7 +10,7 @@ class User(AbstractUser):
         return {
             'id': self.id,
             'username': self.username,
-            'following': len(self.following.all()),
+            'following': [i.username for i in self.following.all()],
         }
 
 
@@ -27,4 +27,5 @@ class Post(models.Model):
             'time': self.time.strftime("%b %-d %Y, %-I:%M %p"),
             'content': self.content,
             'likes': len(self.likes.all()),
+            'likers': [i.username for i in self.likes.all()]
         }

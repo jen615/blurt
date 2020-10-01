@@ -108,6 +108,9 @@ hr {
   border-color: #baa588;
   border-radius: 12px;
 }
+.post .active {
+  border-color: #cb4b82;
+}
 .post .edit-button {
   background-color: #dbc2a8;
   border-color: #baa588;

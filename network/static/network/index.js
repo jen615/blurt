@@ -78,10 +78,6 @@ function loadPosts(feed, page = 1) {
         })
 }
 
-function morePosts(group) {
-
-}
-
 // Posting
 function makePost(feed) {
     const content = document.querySelector('#post-box').value;
@@ -132,8 +128,9 @@ function renderPost(post) {
     // Like button
     const likeButton = document.createElement("button");
     likeButton.value = id;
-    likeButton.className = 'like-button';
-    likeButton.innerHTML = ' ❣ like'
+    likeButton.className = post['likers'].includes(username) ? 'like-button active' : 'like-button';
+    console.log(post['likers']);
+    likeButton.innerHTML = post['likers'].includes(username)? ' ❣ unlike': ' ❣ like';
     likeButton.addEventListener("click", () => {
         likePost(id);
     })
@@ -262,7 +259,7 @@ function loadProfile(user) {
         .then(response => response.json())
         .then(profile => {
             document.querySelector('#follower-count').innerHTML = profile.followers;
-            document.querySelector('#following-count').innerHTML = profile.following;
+            document.querySelector('#following-count').innerHTML = profile.following.length;
         })
 
     loadPosts(feed)

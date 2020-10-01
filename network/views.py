@@ -105,6 +105,7 @@ def load_posts(request, feed, page):
     # Return posts in reverse order
     posts = posts.order_by('-time').all()
     serialization = [post.serialize() for post in posts]
+    print(serialization)
 
     # Paginate results
     pagi = Paginator(serialization, 5)
