@@ -129,7 +129,6 @@ function renderPost(post) {
     const likeButton = document.createElement("button");
     likeButton.value = id;
     likeButton.className = post['likers'].includes(username) ? 'like-button active' : 'like-button';
-    console.log(post['likers']);
     likeButton.innerHTML = post['likers'].includes(username)? ' ❣ unlike': ' ❣ like';
     likeButton.addEventListener("click", () => {
         likePost(id);
