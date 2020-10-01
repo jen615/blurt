@@ -133,6 +133,12 @@ hr {
   }
 }
 
+#edit-box{
+  margin-top: 1vh;
+  min-width: 90%;
+  display: block;
+}
+
 .page-area {
   display: flex;
   justify-content: center;
@@ -207,7 +213,7 @@ label {
     border-radius: 12px;
     width: fit-content;
     color: #034141;
-    border-color: #baa588;
+    border-color: #6c8a8a;
     border-right-color: #047979;
     border-bottom-color: #047979;
     background-color: #01a4a4;
@@ -216,6 +222,12 @@ label {
 
   #follow-button:hover {
     font-style: italic;
+  }
+
+  #follow-button:disabled{
+    background-color: #6c8a8a;
+    border-color: #6c8a8a;
+    cursor: not-allowed;
   }
 
 }
