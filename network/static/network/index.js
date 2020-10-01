@@ -44,6 +44,11 @@ function loadPosts(feed, page = 1) {
                 renderPost(postPack[i])
             }
 
+            // Create page nav area
+            const pNav = document.createElement("div");
+            pNav.className = 'page-area'
+            document.querySelector('.post-view').append(pNav);
+
             //Previous page button
             if (page > 1) {
                 const prevButton = document.createElement("button");
@@ -52,7 +57,7 @@ function loadPosts(feed, page = 1) {
                 prevButton.addEventListener("click", () => {
                     loadPosts(feed, page - 1)
                 })
-                document.querySelector('.post-view').append(prevButton);
+                document.querySelector('.page-area').append(prevButton);
             }
 
             // Next page button
@@ -63,7 +68,7 @@ function loadPosts(feed, page = 1) {
                 nextButton.addEventListener("click", () => {
                     loadPosts(feed, page + 1)
                 })
-                document.querySelector('.post-view').append(nextButton);
+                document.querySelector('.page-area').append(nextButton);
             }
         })
 }
