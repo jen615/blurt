@@ -75,8 +75,7 @@ hr {
 .post {
   min-width: 500px;
   width: available;
-  margin-left: 5vw;
-  margin-right: 5vw;
+  margin: 2.5vh 5vw;
   padding: 1vw;
   border: 2px solid #dbc2a8;
   border-radius: 5px;
@@ -130,6 +129,25 @@ hr {
     border-radius: 12px;
     margin-left: 1vw;
     font-size: smaller;
+  }
+}
+
+.new {
+  animation-duration: 1s;
+  animation-name: slide-down;
+  animation-timing-function: ease-in-out;
+
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 10%;
+    margin-top: -15vh;
+  }
+
+  to {
+    opacity: 100%;
+    margin-top: initial;
   }
 }
 
