@@ -40,13 +40,14 @@ function postView() {
 }
 
 function loadPosts(feed, page = 1) {
-    document.querySelector(".post-view").innerHTML = '<hr>';
+    document.querySelector(".post-view").innerHTML = '';
     fetch(`/feed/${feed}/${page}`)
         .then(response => response.json())
         .then(response => {
             const postPack = response['posts'];
             for (const i in postPack) {
-                renderPost(postPack[i])
+                document.querySelector('.post-view').append(renderPost(postPack[i]));
+                document.querySelector('.post-view').append();
             }
 
             // Create page nav area
@@ -88,12 +89,11 @@ function makePost(feed) {
             content: content
         })
     })
+        .then(res => res.json())
         .then(res => {
-            if (!res.ok) {
-                alert('invalid message');
-                return;
-            }
-            loadPosts(feed);
+            const nPost = renderPost(res);
+            nPost.className = 'post new'
+            document.querySelector('.post-view').prepend(nPost);
         })
     document.querySelector('#post-box').value = '';
 }
@@ -143,9 +143,6 @@ function renderPost(post) {
         editPost(id);
     })
 
-    //Separate posts with a hr
-    const rule = document.createElement("hr")
-
     // Render post to dom, adding edit button only to the current user's posts
     postArea.append(author, time, content, likes, likeButton);
     if (post.author === username) {
@@ -156,8 +153,8 @@ function renderPost(post) {
     // to the post view w/o refreshing whole view and edited posts can be modified in place.
     // The new return would be the postArea.
 
-    document.querySelector('.post-view').append(postArea);
-    document.querySelector('.post-view').append(rule);
+    return postArea
+
 
 }
 

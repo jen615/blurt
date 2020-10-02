@@ -135,7 +135,7 @@ def make_post(request):
 
     post.save()
 
-    return JsonResponse({'message': 'Post successful'}, status=201)
+    return JsonResponse(post.serialize(), status=201)
 
 
 @login_required
