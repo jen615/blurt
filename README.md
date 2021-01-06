@@ -1,9 +1,21 @@
-# cs50wNetwork
+# Blurt
+## CS50W Network Project
 
-## Network
+Blurt is a minimal Twitter-style social media platform that allows users to create accounts,
+post "blurts" (short text posts) and interact with other users and their blurts. It 
+includes many features common in modern social media platforms such as:
 
-#### Specification:
+- liking/ unliking posts
+- editing posts
+- deleting posts
+- following/ unfollowing users
 
+and displays familiarity with technical concepts like:
 
-- Pagination: On any page that displays posts, posts should only be displayed 10 on a page. If there are more than ten posts, a “Next” button should appear to take the user to the next page of posts (which should be older than the current page of posts). If not on the first page, a “Previous” button should appear to take the user to the previous page of posts as well.
+- the *fetch* API
+- pagination
+- API development
+- serialization
+- server/ client side validation
+- UI development
 
