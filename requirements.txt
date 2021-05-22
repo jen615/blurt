@@ -1,10 +1,9 @@
 asgiref==3.3.4
 Django==3.2.3
 django-prometheus==2.1.0
-GDAL==3.2.2
-numpy==1.20.2
+numpy==1.20.3
 prometheus-client==0.10.1
-protobuf==3.15.8
+protobuf==3.17.0
 pytz==2021.1
-six==1.15.0
+six==1.16.0
 sqlparse==0.4.1
